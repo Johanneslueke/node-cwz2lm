@@ -41,7 +41,7 @@ describe('IntervalCheckerService', () => {
   it('should detect overlaps', async () => {
     const sourceA = cold('--x|', { x: [1, 1] });
     const sourceB = cold('--x|', {
-      x: ['01.01.2023 00:00', '01.01.2023 00:30'],
+      x: ['01.01.2023 00:00', '01.01.2023 00:00'],
     });
     const expected = cold('---x|', {
       x: [
