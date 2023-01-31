@@ -22,7 +22,6 @@
     "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
-    "experimentalDecorators": true,
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,

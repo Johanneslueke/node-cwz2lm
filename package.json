@@ -2,7 +2,11 @@
   "name": "node-starter",
   "version": "0.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " cd intervals && ng serve"
+  },
+  "stackblitz": {
+    "startCommand": "npm start"
   },
   "devDependencies": {
     "@angular/cli": "^15.1.3"
