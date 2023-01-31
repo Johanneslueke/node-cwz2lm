@@ -44,12 +44,11 @@ export class IntervalCheckerService {
 
         for (const [index, interval] of data.entries()) {
           for (const [key, nextInterval] of data.entries()) {
-            if (
-              (interval.start > nextInterval.start &&
-                interval.start < nextInterval.end) ||
-              (interval.end > nextInterval.end &&
-                interval.end < nextInterval.end)
-            ) {
+            const a = interval.start;
+            const b = interval.end;
+            const x = nextInterval.start;
+            const y = nextInterval.end;
+            if ((a > x && a < y) || (b > y && b < y)) {
               result.push({
                 interval,
                 overlapsWith: key,
@@ -58,6 +57,7 @@ export class IntervalCheckerService {
             }
           }
         }
+
         return result;
       })
     );
