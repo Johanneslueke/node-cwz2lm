@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " cd intervals && ng serve"
+    "start": " cd intervals && npm install && npm start"
   },
   "stackblitz": {
     "startCommand": "npm start"
