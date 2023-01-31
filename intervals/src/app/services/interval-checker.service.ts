@@ -47,6 +47,8 @@ export class IntervalCheckerService {
             const a = interval;
             const b = nextInterval;
 
+            if (index === key) continue;
+
             if (
               (a.start >= b.start && a.start < b.end) ||
               (a.end > b.end && a.end <= b.end)
