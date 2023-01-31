@@ -57,6 +57,6 @@ describe('IntervalCheckerService', () => {
       ],
     });
 
-    expect(service.detect(sourceA, sourceB)).toBeObservable(expected);
+    expect(service.detect(sourceB, sourceA)).toBeObservable(expected);
   });
 });
