@@ -35,11 +35,11 @@ export class IntervalCheckerService {
         const result: Array<{
           index: number;
           overlapsWith: number;
-          interval: {
-            start: number;
-            end: number;
-            duration: number;
-          };
+          // interval: {
+          //   start: number;
+          //   end: number;
+          //   duration: number;
+          // };
         }> = [];
 
         for (const [index, interval] of data.entries()) {
@@ -48,11 +48,11 @@ export class IntervalCheckerService {
             const b = nextInterval;
 
             if (
-              (a.start > b.start && a.start < b.end) ||
-              (a.end > b.end && a.end < b.end)
+              (a.start >= b.start && a.start < b.end) ||
+              (a.end > b.end && a.end <= b.end)
             ) {
               result.push({
-                interval,
+                //interval,
                 overlapsWith: key,
                 index,
               });

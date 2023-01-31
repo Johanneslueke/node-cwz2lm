@@ -43,16 +43,20 @@ describe('IntervalCheckerService', () => {
     const sourceB = cold('--x|', {
       x: ['01.01.2023 00:00', '01.01.2023 00:00'],
     });
-    const expected = cold('---x|', {
+    const expected = cold('--x|', {
       x: [
         {
           index: 0,
           overlapsWith: 1,
-          Interval: {
-            start: Date.parse('01.01.2023 00:00'),
-            end: Date.parse('01.01.2023 00:00') + 1,
-            duration: 1,
-          },
+          // Interval: {
+          //   start: Date.parse('01.01.2023 00:00'),
+          //   end: Date.parse('01.01.2023 00:00') + 1,
+          //   duration: 1,
+          // },
+        },
+        {
+          index: 1,
+          overlapsWith: 0,
         },
       ],
     });
