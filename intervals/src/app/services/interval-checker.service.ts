@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, zip, mergeMap, toArray, map } from 'rxjs';
+import { Observable, zip, mergeMap, toArray, map, filter } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +48,7 @@ export class IntervalCheckerService {
             const b = interval.end;
             const x = nextInterval.start;
             const y = nextInterval.end;
-            if ((a > x && a < y) || (b > y && b < y)) {
+            if ((a >= x && a < y) || (b >= y && b < y)) {
               result.push({
                 interval,
                 overlapsWith: key,
@@ -58,7 +58,7 @@ export class IntervalCheckerService {
           }
         }
 
-        return result;
+        return result.filter((x) => x.index !== x.overlapsWith);
       })
     );
 
