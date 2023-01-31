@@ -51,7 +51,7 @@ export class IntervalCheckerService {
 
             if (
               (a.start >= b.start && a.start < b.end) ||
-              (a.end > b.end && a.end <= b.end)
+              (a.end >= b.start && a.end <= b.end)
             ) {
               result.push({
                 //interval,

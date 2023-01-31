@@ -38,7 +38,7 @@ describe('IntervalCheckerService', () => {
     },
   ];
 
-  it('should detect overlaps ONE', async () => {
+  it('should detect overlaps A and B are the same', async () => {
     const sourceA = cold('--x|', { x: [1, 1] });
     const sourceB = cold('--x|', {
       x: ['01.01.2023 00:00', '01.01.2023 00:00'],
@@ -64,7 +64,7 @@ describe('IntervalCheckerService', () => {
     expect(service.detect(sourceB, sourceA)).toBeObservable(expected);
   });
 
-  it('should detect overlaps TWO', async () => {
+  it('should detect overlaps B begins in A', async () => {
     const sourceA = cold('--x|', { x: [1000 * 60, 1000 * 60] });
     const sourceB = cold('--x|', {
       x: ['01.01.2023 00:00', '01.01.2023 00:00:30'],
@@ -79,6 +79,27 @@ describe('IntervalCheckerService', () => {
           //   end: Date.parse('01.01.2023 00:00') + 1,
           //   duration: 1,
           // },
+        },
+        {
+          index: 1,
+          overlapsWith: 0,
+        },
+      ],
+    });
+
+    expect(service.detect(sourceB, sourceA)).toBeObservable(expected);
+  });
+
+  it('should detect overlaps B begin at A.end', async () => {
+    const sourceA = cold('--x|', { x: [1000 * 60, 1000 * 60] });
+    const sourceB = cold('--x|', {
+      x: ['01.01.2023 00:00:00', '01.01.2023 00:01:00'],
+    });
+    const expected = cold('--x|', {
+      x: [
+        {
+          index: 0,
+          overlapsWith: 1,
         },
         {
           index: 1,
