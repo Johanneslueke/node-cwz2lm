@@ -7,16 +7,7 @@ import { Observable, zip, mergeMap, toArray, map, filter } from 'rxjs';
 export class IntervalCheckerService {
   constructor() {}
 
-  /**
-   * STEP 1: merge both arrays so that each corresponding index pairs up
-   * STEP 2: remove the array and treat each item seperatly
-   * STEP 3: parse single date and time to get a number representing the time
-   * STEP 4: remove the array and treat each item seperatly
-   * STEP 5: Map each pair to an object
-   * STEP 6: create one singular array containing objects with start,end and duration as property
-   * STEP 7: Do the overlap check and return array with the index which are overlapping
-   */
-  detect(
+  zipIntervals(
     start: Observable<Array<string>>,
     duration: Observable<Array<number>>
   ) {
@@ -27,7 +18,28 @@ export class IntervalCheckerService {
         map((date) => Date.parse(date)) //STEP 3: parse single date and time to get a number representing the time
       ),
       duration.pipe(mergeMap((duration) => duration)) //STEP 4: remove the array and treat each item seperatly
-    ).pipe(
+    );
+
+    return zipped;
+  }
+
+  mergeZipAndGroup(intervals: Observable<[number, number]>) {
+    return intervals.pipe(
+      map(([start, duration]) => ({ start, duration, end: start + duration })), //STEP 5: Map each pair to an object
+      toArray()
+    );
+  }
+  /**
+   * STEP 1: merge both arrays so that each corresponding index pairs up
+   * STEP 2: remove the array and treat each item seperatly
+   * STEP 3: parse single date and time to get a number representing the time
+   * STEP 4: remove the array and treat each item seperatly
+   * STEP 5: Map each pair to an object
+   * STEP 6: create one singular array containing objects with start,end and duration as property
+   * STEP 7: Do the overlap check and return array with the index which are overlapping
+   */
+  detect(intervals: Observable<[number, number]>) {
+    let checked = intervals.pipe(
       map(([start, duration]) => ({ start, duration, end: start + duration })), //STEP 5: Map each pair to an object
       toArray(), //STEP 6: create one singular array containing objects with start,end and duration as property
       map((data) => {
@@ -49,10 +61,7 @@ export class IntervalCheckerService {
 
             if (index === key) continue;
 
-            if (
-              (a.start >= b.start && a.start < b.end) ||
-              (a.end >= b.start && a.end <= b.end)
-            ) {
+            if (a.start <= b.end && a.end >= b.start) {
               result.push({
                 //interval,
                 overlapsWith: key,
@@ -66,6 +75,6 @@ export class IntervalCheckerService {
       })
     );
 
-    return zipped;
+    return checked;
   }
 }
