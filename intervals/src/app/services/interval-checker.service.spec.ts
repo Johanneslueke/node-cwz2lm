@@ -91,9 +91,9 @@ describe('IntervalCheckerService', () => {
   });
 
   it('should detect overlaps B begin at A.end (a)----(b)----|', async () => {
-    const sourceA = cold('--x|', { x: [1000 * 60, 1000 * 60] });
+    const sourceA = cold('--x|', { x: [1000 * 60, 1000 * 30] });
     const sourceB = cold('--x|', {
-      x: ['01.01.2023 00:00:00', '01.01.2023 00:01:00'],
+      x: ['01.01.2023 00:00:00', '01.01.2023 00:00:30'],
     });
     const expected = cold('--x|', {
       x: [
